@@ -11,8 +11,6 @@
     <!-- GSAP for interactive animations -->
     <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/ScrollTrigger.min.js"></script>
-    <!-- EmailJS CDN -->
-    <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/@emailjs/browser@4/dist/email.min.js"></script>
     <style>
         * {
             margin: 0;
@@ -538,16 +536,25 @@
         }
         .error-message {
             font-size: 0.7rem;
-            color: #c25;
+            color: #B48C48;
             margin-left: 1rem;
             display: block;
         }
+        /* Simple success message - clean and minimal */
         .form-success {
-            background: #E9F5E9;
+            background: #F5F0EA;
+            border: 1px solid #B48C48;
             border-radius: 60px;
             padding: 0.8rem;
             text-align: center;
             margin-top: 1rem;
+            color: #8B6946;
+            font-weight: 500;
+            font-size: 0.85rem;
+        }
+        .form-success i {
+            color: #B48C48;
+            margin-right: 5px;
         }
 
         /* Footer */
@@ -631,10 +638,9 @@
 </nav>
 
 <main>
-    <!-- Hero Section: Left side image containers, Center brand, Right side iPhone mockup -->
+    <!-- Hero Section -->
     <section id="home" class="hero-asymmetric">
         <div class="hero-grid-asymmetric">
-            <!-- LEFT GALLERY - Inverted image containers -->
             <div class="gallery-left">
                 <div class="img-card left-stack-1" style="background-image: url('https://placehold.co/600x900/E8DFD3/B48C48?text=Minimalist+Living');">
                     <div class="img-caption">Minimalist Living</div>
@@ -647,7 +653,6 @@
                 </div>
             </div>
 
-            <!-- CENTER: Brand message -->
             <div class="hero-center-text">
                 <div class="hero-sub">CONTEMPORARY</div>
                 <h1>El-Roi</h1>
@@ -658,7 +663,6 @@
                 </div>
             </div>
 
-            <!-- RIGHT SIDE: iPhone Mockup Template -->
             <div class="iphone-mockup">
                 <div class="iphone">
                     <div class="dynamic-island"></div>
@@ -731,15 +735,24 @@
         </div>
     </section>
 
-    <!-- Contact -->
+    <!-- Contact Section -->
     <section id="contact" class="section">
         <div class="section-sub">Inquire</div>
         <h2 class="section-title">Begin Your Design Story</h2>
         <div class="contact-wrapper">
             <form id="contactForm">
-                <div class="form-group"><input type="text" id="fullname" placeholder="Full name *" required><span class="error-message" id="nameError"></span></div>
-                <div class="form-group"><input type="email" id="email" placeholder="Email address *" required><span class="error-message" id="emailError"></span></div>
-                <div class="form-group"><textarea id="message" rows="4" placeholder="Tell us about your vision... *" required></textarea><span class="error-message" id="msgError"></span></div>
+                <div class="form-group">
+                    <input type="text" id="fullname" placeholder="Full name *" required>
+                    <span class="error-message" id="nameError"></span>
+                </div>
+                <div class="form-group">
+                    <input type="email" id="email" placeholder="Email address *" required>
+                    <span class="error-message" id="emailError"></span>
+                </div>
+                <div class="form-group">
+                    <textarea id="message" rows="4" placeholder="Tell us about your vision... *" required></textarea>
+                    <span class="error-message" id="msgError"></span>
+                </div>
                 <button type="submit" id="submitBtn">Send vision <i class="fas fa-feather-alt"></i></button>
                 <div id="formFeedback" style="margin-top: 1rem;"></div>
             </form>
@@ -822,16 +835,7 @@
         });
     });
     
-       // ============================================
-    // EMAILJS CONFIGURATION - UPDATED FIX
-    // ============================================
-    const EMAILJS_PUBLIC_KEY = "8xcOTvAcGDBuy1ZQ_";
-    const SERVICE_ID = "service_b1rucgk";
-    const TEMPLATE_ID = "template_bqrz76k";
-    
-    // Initialize EmailJS
-    emailjs.init(EMAILJS_PUBLIC_KEY);
-    
+    // Simple form handler - minimal success message
     const form = document.getElementById('contactForm');
     const nameInp = document.getElementById('fullname');
     const emailInp = document.getElementById('email');
@@ -847,66 +851,51 @@
         nameErr.innerText = '';
         emailErr.innerText = '';
         msgErr.innerText = '';
+        
         const nameVal = nameInp.value.trim();
         const emailVal = emailInp.value.trim();
         const msgVal = msgInp.value.trim();
+        
         if (!nameVal) { nameErr.innerText = 'Name required'; valid = false; }
         else if (nameVal.length < 2) { nameErr.innerText = 'At least 2 characters'; valid = false; }
+        
         const emailPattern = /^[^\s@]+@([^\s@]+\.)+[^\s@]+$/;
         if (!emailVal) { emailErr.innerText = 'Email required'; valid = false; }
         else if (!emailPattern.test(emailVal)) { emailErr.innerText = 'Valid email needed'; valid = false; }
+        
         if (!msgVal) { msgErr.innerText = 'Message required'; valid = false; }
-        else if (msgVal.length < 10) { msgErr.innerText = 'Message too short (min 10 chars)'; valid = false; }
+        else if (msgVal.length < 10) { msgErr.innerText = 'Message too short'; valid = false; }
+        
         return valid;
     }
     
-    form.addEventListener('submit', async (e) => {
+    form.addEventListener('submit', (e) => {
         e.preventDefault();
         if (!validateFields()) return;
         
-        submitBtn.disabled = true;
-        submitBtn.innerHTML = 'Sending... <i class="fas fa-spinner fa-pulse"></i>';
-        feedbackDiv.innerHTML = '';
-        
         const name = nameInp.value.trim();
         const email = emailInp.value.trim();
-        const messageText = msgInp.value.trim();
+        const message = msgInp.value.trim();
         
-        // Try different parameter naming patterns that EmailJS templates commonly use
-        const templateParams = { 
-            from_name: name,
-            user_name: name,
-            name: name,
-            from_email: email,
-            user_email: email,
-            email: email,
-            message: messageText,
-            user_message: messageText,
-            reply_to: email
-        };
+        // Create email content
+        const subject = encodeURIComponent(`Design Inquiry from ${name}`);
+        const body = encodeURIComponent(
+            `Name: ${name}\n` +
+            `Email: ${email}\n\n` +
+            `Message:\n${message}`
+        );
         
-        console.log('Sending with params:', templateParams);
+        // Open email client
+        window.location.href = `mailto:kerenalphag@gmail.com?subject=${subject}&body=${body}`;
         
-        try {
-            const response = await emailjs.send(SERVICE_ID, TEMPLATE_ID, templateParams);
-            console.log('EmailJS Success:', response);
-            feedbackDiv.innerHTML = '<div class="form-success"><i class="fas fa-check-circle"></i> ✨ Thank you ' + name.split(' ')[0] + '! Your inquiry was sent to kerenalphag@gmail.com. We\'ll be in touch within 24 hours. ✨</div>';
-            form.reset();
-        } catch (err) {
-            console.error('EmailJS Error Details:', err);
-            // Show more detailed error message
-            let errorMsg = 'Failed to send. ';
-            if (err.text) {
-                errorMsg += 'Error: ' + err.text;
-            } else {
-                errorMsg += 'Please email kerenalphag@gmail.com directly.';
-            }
-            feedbackDiv.innerHTML = '<div class="form-success" style="background:#FFEBE6;color:#B33;"><i class="fas fa-exclamation-triangle"></i> ' + errorMsg + '</div>';
-        } finally {
-            submitBtn.disabled = false;
-            submitBtn.innerHTML = 'Send vision <i class="fas fa-feather-alt"></i>';
-            setTimeout(() => { if(feedbackDiv.firstChild) feedbackDiv.innerHTML = ''; }, 8000);
-        }
+        // Simple, elegant success message
+        feedbackDiv.innerHTML = '<div class="form-success"><i class="fas fa-check-circle"></i> Thank you! Please check your email to complete.</div>';
+        
+        form.reset();
+        
+        setTimeout(() => { 
+            if(feedbackDiv.firstChild) feedbackDiv.innerHTML = ''; 
+        }, 5000);
     });
     
     nameInp.addEventListener('input', () => { nameErr.innerText = ''; feedbackDiv.innerHTML = ''; });
