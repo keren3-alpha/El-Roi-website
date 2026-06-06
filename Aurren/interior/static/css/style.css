@@ -1,0 +1,58 @@
+        @import url('https://fonts.googleapis.com/css2?family=Playfair+Display:wght@600&family=Poppins:wght@400;500&display=swap');
+
+        nav {
+            width: 100%;
+            padding: 20px 40px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            background: transparent;
+            position: sticky;
+            top: 0;
+            left: 0;
+            z-index: 100;
+            overflow: hidden;
+        }
+
+        nav .logo {
+            justify-content: flex-start;
+            font-family: 'Playfair Display', serif;
+            font-size: 1.8rem;
+            color: #2c2c2c;
+            letter-spacing: 1px;
+        }
+
+        nav .nav-links {
+            list-style: none;
+            display: flex;
+            gap: 20px;
+            flex-wrap: wrap;
+        }
+
+        nav .nav-links a {
+            text-decoration: none;
+            font-family: 'Poppins', sans-serif;
+            font-size: 1rem;
+            color: #333;
+            position: relative;
+            transition: color 0.3s ease;
+        }
+
+        nav .nav-links a::after {
+            content: "";
+            position: absolute;
+            bottom: -5px;
+            left: 0;
+            width: 0%;
+            height: 2px;
+            background-color: #b89b5e;
+            transition: width 0.3s ease;
+        }
+
+        nav .nav-links a:hover {
+            color: #b89b5e;
+        }
+
+        nav .nav-links a:hover::after {
+            width: 100%;
+        }

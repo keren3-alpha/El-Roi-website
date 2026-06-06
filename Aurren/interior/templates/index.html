@@ -1,0 +1,254 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Aurren | Home</title>
+    <link rel="stylesheet" href="{% static 'css/style.css' %}">
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Playfair+Display:wght@600&family=Poppins:wght@400;500&display=swap');
+
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+
+        body {
+            font-family: 'Poppins', sans-serif;
+            color: #2c2c2c;
+            background-color: #f9f8f6;
+        }
+
+        nav {
+            width: 100%;
+            padding: 20px 40px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            background: transparent;
+            position: sticky;
+            top: 0;
+            z-index: 100;
+        }
+
+        nav .logo {
+            font-family: 'Playfair Display', serif;
+            font-size: 1.8rem;
+            color: #2c2c2c;
+        }
+
+        nav .nav-links {
+            list-style: none;
+            display: flex;
+            gap: 25px;
+            flex-wrap: wrap;
+        }
+
+        nav .nav-links a {
+            text-decoration: none;
+            font-family: 'Poppins', sans-serif;
+            font-size: 1rem;
+            color: #333;
+            position: relative;
+            transition: color 0.3s ease;
+        }
+
+        nav .nav-links a::after {
+            content: "";
+            position: absolute;
+            bottom: -5px;
+            left: 0;
+            width: 0%;
+            height: 2px;
+            background-color: #b89b5e;
+            transition: width 0.3s ease;
+        }
+
+        nav .nav-links a:hover {
+            color: #b89b5e;
+        }
+
+        nav .nav-links a:hover::after {
+            width: 100%;
+        }
+
+        section {
+            padding: 100px 20px;
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        .hero {
+            background-image: url('{% static "images/space1.jpg" %}');
+            height: 100vh;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            text-align: center;
+            background: #fdfcf7;
+        }
+
+        .hero h1 {
+            font-family: 'Playfair Display', serif;
+            font-size: 3rem;
+            margin-bottom: 20px;
+        }
+
+        .hero p {
+            font-size: 1.2rem;
+            margin-bottom: 30px;
+        }
+
+        .hero a {
+            padding: 12px 30px;
+            background-color: #b89b5e;
+            color: #fff;
+            text-decoration: none;
+            font-weight: 500;
+            border-radius: 5px;
+            transition: background 0.3s ease;
+        }
+
+        .hero a:hover {
+            background-color: #9c7f4e;
+        }
+
+        h2 {
+            font-family: 'Playfair Display', serif;
+            font-size: 2rem;
+            margin-bottom: 30px;
+            text-align: center;
+        }
+
+        .services, .portfolio, .testimonials, .contact {
+            text-align: center;
+        }
+
+        .services .cards, .portfolio .grid {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 20px;
+            justify-content: center;
+        }
+
+        .services .card, .portfolio .item {
+            background: #fff;
+            padding: 30px;
+            border-radius: 10px;
+            box-shadow: 0 4px 10px rgba(0,0,0,0.05);
+            flex: 1 1 250px;
+            max-width: 300px;
+        }
+
+        .contact form {
+            display: flex;
+            flex-direction: column;
+            gap: 15px;
+            max-width: 500px;
+            margin: 0 auto;
+        }
+
+        .contact input, .contact textarea {
+            padding: 12px;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+            font-family: 'Poppins', sans-serif;
+        }
+
+        .contact button {
+            padding: 12px;
+            background-color: #b89b5e;
+            color: #fff;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            font-weight: 500;
+        }
+
+        .contact button:hover {
+            background-color: #9c7f4e;
+        }
+
+        footer {
+            text-align: center;
+            padding: 30px 20px;
+            background: #f0eee9;
+            font-size: 0.9rem;
+        }
+
+        @media (max-width: 768px) {
+            nav {
+                padding: 15px 20px;
+            }
+            nav .nav-links {
+                gap: 15px;
+            }
+            .hero h1 {
+                font-size: 2.2rem;
+            }
+        }
+    </style>
+</head>
+<body>
+    <nav>
+        <div class="logo">Aurren</div>
+        <ul class="nav-links">
+            <li><a href="#home">Home</a></li>
+            <li><a href="#about">About Us</a></li>
+            <li><a href="#services">Services</a></li>
+            <li><a href="#portfolio">Portfolio</a></li>
+            <li><a href="#contact">Contact Us</a></li>
+        </ul>
+    </nav>
+
+    <section id="home" class="hero">
+        <h1>Empowering Creativity Through Simplicity</h1>
+        <p>Modern, elegant designs and experiences crafted with clarity and intention.</p>
+        <a href="#services">Explore Work</a>
+    </section>
+
+    <section id="about">
+        <h2>About</h2>
+        <p>We believe in the power of minimal design to tell meaningful stories and inspire lasting impressions.</p>
+    </section>
+
+    <section id="services" class="services">
+        <h2>Services</h2>
+        <div class="cards">
+            <div class="card">Web & Brand Design</div>
+            <div class="card">Creative Strategy</div>
+            <div class="card">UI/UX Development</div>
+            <div class="card">Portfolio Projects</div>
+        </div>
+    </section>
+
+    <section id="portfolio" class="portfolio">
+        <h2>Portfolio</h2>
+        <div class="grid">
+            <div class="item">Project 1</div>
+            <div class="item">Project 2</div>
+            <div class="item">Project 3</div>
+        </div>
+    </section>
+
+    <section id="testimonials" class="testimonials">
+        <h2>Testimonials</h2>
+        <p>"Working with Aurren transformed our digital presence." – Client A</p>
+        <p>"A seamless, professional, and creative experience." – Client B</p>
+    </section>
+
+    <section id="contact" class="contact">
+        <h2>Contact</h2>
+        <form>
+            {% csrf_token %}
+            <input type="text" name="name" placeholder="Your Name" required>
+            <input type="email" name="email" placeholder="Your Email" required>
+            <textarea name="message" rows="5" placeholder="Your Message" required></textarea>
+            <button type="submit">Send Message</button>
+        </form>
+    </section>
+
+    <footer>
+        © 2025 Aurren | Designed by Alpha
+    </footer>
+</body>
+</html>
